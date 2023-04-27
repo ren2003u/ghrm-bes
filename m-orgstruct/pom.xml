@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.vcorp.ghrm</groupId>
+        <artifactId>bes</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <artifactId>m-orgstruct</artifactId>
+    <description>
+        组织管理
+    </description>
+
+    <dependencies>
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>cn.vcorp.ghrm</groupId>
+            <artifactId>m-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.vcorp.ghrm</groupId>
+            <artifactId>m-system</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

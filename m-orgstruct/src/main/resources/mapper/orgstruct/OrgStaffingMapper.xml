@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.vcorp.ghrm.orgstruct.mapper.OrgStaffingMapper">
+
+    <insert id="createOrgStaffing" parameterType="cn.vcorp.ghrm.orgstruct.domain.OrgStaffing">
+        INSERT INTO org_staffing (os_id, org_id, jt_id, position_num)
+        VALUES (#{os_id}, #{org_id}, #{jt_id}, #{position_num})
+    </insert>
+
+    <delete id="deleteOrgStaffing" parameterType="String">
+        DELETE FROM org_staffing WHERE os_id = #{os_id}
+    </delete>
+
+    <update id="updateOrgStaffing" parameterType="cn.vcorp.ghrm.orgstruct.domain.OrgStaffing">
+        UPDATE org_staffing
+        SET
+        org_id = #{org_id},
+        jt_id = #{jt_id},
+        position_num = #{position_num}
+        WHERE os_id = #{os_id}
+    </update>
+
+
+    <select id="selectAllOrgStaffings" resultType="cn.vcorp.ghrm.orgstruct.domain.OrgStaffing">
+        SELECT * FROM org_staffing
+    </select>
+
+    <select id="selectOrgStaffingById" parameterType="string" resultType="cn.vcorp.ghrm.orgstruct.domain.OrgStaffing">
+        SELECT * FROM org_staffing WHERE os_id = #{os_id}
+    </select>
+
+</mapper>

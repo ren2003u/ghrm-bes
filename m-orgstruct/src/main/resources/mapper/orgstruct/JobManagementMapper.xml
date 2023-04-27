@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.vcorp.ghrm.orgstruct.mapper.JobManagementMapper">
+
+    <!-- JobTitle operations -->
+    <insert id="createJobTitle" parameterType="jobTitle">
+        INSERT INTO job_title (jt_id, code, name, note)
+        VALUES (#{jobTitle.jtId}, #{jobTitle.jtCode}, #{jobTitle.jtName}, #{jobTitle.jtNote})
+    </insert>
+
+    <update id="updateJobTitle" parameterType="jobTitle">
+        UPDATE job_title
+        SET code = #{jobTitle.jtCode}, name = #{jobTitle.jtName}, note = #{jobTitle.jtNote}
+        WHERE jt_id = #{jobTitle.jtId}
+    </update>
+
+    <delete id="deleteJobTitle">
+        DELETE FROM job_title WHERE jt_id = #{jtId}
+    </delete>
+
+    <!-- JobCategory operations -->
+    <insert id="createJobCategory" parameterType="jobCategory">
+        INSERT INTO job_category (jc_id, code, name, note)
+        VALUES (#{jobCategory.jcatId}, #{jobCategory.jcatCode}, #{jobCategory.jcatName}, #{jobCategory.jcatNote})
+    </insert>
+
+    <update id="updateJobCategory" parameterType="jobCategory">
+        UPDATE job_category
+        SET code = #{jobCategory.jcatCode}, name = #{jobCategory.jcatName}, note = #{jobCategory.jcatNote}
+        WHERE jc_id = #{jobCategory.jcatId}
+    </update>
+
+    <delete id="deleteJobCategory">
+        DELETE FROM job_category WHERE jc_id = #{jcatId}
+    </delete>
+
+    <!-- JobRank operations -->
+    <insert id="createJobRank" parameterType="jobRank">
+        INSERT INTO job_rank (jr_id, jc_id, ranks, note)
+        VALUES (#{jobRank.jrId}, #{jobRank.in_time}, #{jobRank.jcId}, #{jobRank.ranks}, #{jobRank.jrNote})
+    </insert>
+
+    <update id="updateJobRank" parameterType="jobRank">
+        UPDATE job_rank
+        SET jc_id = #{jobRank.jcId}, ranks = #{jobRank.ranks}, note = #{jobRank.jrNote}
+        WHERE jr_id = #{jobRank.jrId}
+    </update>
+
+    <delete id="deleteJobRank">
+        DELETE FROM job_rank WHERE jr_id = #{jrId}
+    </delete>
+
+</mapper>

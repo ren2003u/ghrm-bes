@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.vcorp.ghrm.orgstruct.mapper.OrgRelationshipMapper">
+
+    <insert id="createOrgRelationship" parameterType="orgRelationship">
+        INSERT INTO org_relationship (or_id, parent_org_id, child_org_id)
+        VALUES (#{orgRelationship.or_id}, #{orgRelationship.parent_org_id}, #{orgRelationship.child_org_id})
+    </insert>
+
+    <update id="updateOrgRelationship" parameterType="orgRelationship">
+        UPDATE org_relationship
+        SET parent_org_id = #{orgRelationship.parent_org_id}, child_org_id = #{orgRelationship.child_org_id}
+        WHERE or_id = #{orgRelationship.or_id}
+    </update>
+
+    <delete id="deleteOrgRelationship">
+        DELETE FROM org_relationship WHERE or_id = #{or_id}
+    </delete>
+
+
+    <select id="selectAllOrgRelationships" resultType="cn.vcorp.ghrm.orgstruct.domain.OrgRelationship">
+        SELECT * FROM org_relationship
+    </select>
+
+    <select id="selectOrgRelationshipById" parameterType="string" resultType="cn.vcorp.ghrm.orgstruct.domain.OrgRelationship">
+        SELECT * FROM org_relationship WHERE or_id = #{or_id}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.vcorp.ghrm.orgstruct.mapper.OrgMapper">
+
+    <insert id="createOrg" parameterType="org">
+        INSERT INTO org (org_id, ot_id, code, name, short_name, addr)
+        VALUES (#{org.org_id}, #{org.ot_id}, #{org.code}, #{org.name}, #{org.short_name}, #{org.addr})
+    </insert>
+
+    <update id="updateOrg" parameterType="org">
+        UPDATE org
+        SET ot_id = #{org.ot_id}, code = #{org.code}, name = #{org.name},
+        short_name = #{org.short_name}, addr = #{org.addr}
+        WHERE org_id = #{org.org_id}
+    </update>
+
+    <delete id="deleteOrg">
+        DELETE FROM org WHERE org_id = #{org_id}
+    </delete>
+
+    <select id="selectAllOrgs" resultType="cn.vcorp.ghrm.orgstruct.domain.Org">
+        SELECT * FROM org
+    </select>
+
+    <select id="selectOrgById" parameterType="string" resultType="cn.vcorp.ghrm.orgstruct.domain.Org">
+        SELECT * FROM org WHERE org_id = #{org_id}
+    </select>
+
+</mapper>
