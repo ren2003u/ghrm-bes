@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vcorp.ghrm.emp.mapper.EthnicMapper">
+    
+    <resultMap type="Ethnic" id="EthnicResult">
+        <result property="ethnicId"    column="ethnic_id"    />
+        <result property="inTime"    column="in_time"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="sortby"    column="sortby"    />
+    </resultMap>
+
+    <sql id="selectEthnicVo" >
+        select ethnic_id, in_time, code, name, sortby from ethnic
+    </sql>
+
+    <select id="selectEthnicList" parameterType="Ethnic" resultMap="EthnicResult">
+        <include refid="selectEthnicVo"/>
+        <where>  
+            <if test="inTime != null "> and in_time = #{inTime}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+<!--            <if test="sortby != null "> and sortby = #{sortby}</if>-->
+            <if test="sortby != null "> and order by #{sortby}</if>
+        </where>
+    </select>
+    
+    <select id="selectEthnicById" parameterType="String" resultMap="EthnicResult">
+        <include refid="selectEthnicVo"/>
+        where ethnic_id = #{ethnicId}
+    </select>
+        
+    <insert id="insertEthnic" parameterType="Ethnic">
+        insert into ethnic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ethnicId != null">ethnic_id,</if>
+            <if test="inTime != null">in_time,</if>
+            <if test="code != null">code,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="sortby != null">sortby,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ethnicId != null">#{ethnicId},</if>
+            <if test="inTime != null">#{inTime},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sortby != null">#{sortby},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEthnic" parameterType="Ethnic">
+        update ethnic
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inTime != null">in_time = #{inTime},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="sortby != null">sortby = #{sortby},</if>
+        </trim>
+        where ethnic_id = #{ethnicId}
+    </update>
+
+    <delete id="deleteEthnicById" parameterType="String">
+        delete from ethnic where ethnic_id = #{ethnicId}
+    </delete>
+
+    <delete id="deleteEthnicByIds" parameterType="String">
+        delete from ethnic where ethnic_id in 
+        <foreach item="ethnicId" collection="array" open="(" separator="," close=")">
+            #{ethnicId}
+        </foreach>
+    </delete>
+
+</mapper>

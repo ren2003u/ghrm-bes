@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vcorp.ghrm.emp.mapper.NationalityMapper">
+    
+    <resultMap type="Nationality" id="NationalityResult">
+        <result property="nationId"    column="nation_id"    />
+        <result property="inTime"    column="in_time"    />
+        <result property="code"    column="code"    />
+        <result property="cname"    column="cname"    />
+        <result property="ename"    column="ename"    />
+        <result property="scode"    column="scode"    />
+        <result property="sortby"    column="sortby"    />
+    </resultMap>
+
+    <sql id="selectNationalityVo">
+        select nation_id, in_time, code, cname, ename, scode, sortby from nationality
+    </sql>
+
+    <select id="selectNationalityList" parameterType="Nationality" resultMap="NationalityResult">
+        <include refid="selectNationalityVo"/>
+        <where>  
+            <if test="inTime != null "> and in_time = #{inTime}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="cname != null  and cname != ''"> and cname like concat('%', #{cname}, '%')</if>
+            <if test="ename != null  and ename != ''"> and ename like concat('%', #{ename}, '%')</if>
+            <if test="scode != null  and scode != ''"> and scode = #{scode}</if>
+            <if test="sortby != null "> and sortby = #{sortby}</if>
+        </where>
+    </select>
+    
+    <select id="selectNationalityById" parameterType="String" resultMap="NationalityResult">
+        <include refid="selectNationalityVo"/>
+        where nation_id = #{nationId}
+    </select>
+        
+    <insert id="insertNationality" parameterType="Nationality">
+        insert into nationality
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nationId != null">nation_id,</if>
+            <if test="inTime != null">in_time,</if>
+            <if test="code != null">code,</if>
+            <if test="cname != null and cname != ''">cname,</if>
+            <if test="ename != null and ename != ''">ename,</if>
+            <if test="scode != null">scode,</if>
+            <if test="sortby != null">sortby,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nationId != null">#{nationId},</if>
+            <if test="inTime != null">#{inTime},</if>
+            <if test="code != null">#{code},</if>
+            <if test="cname != null and cname != ''">#{cname},</if>
+            <if test="ename != null and ename != ''">#{ename},</if>
+            <if test="scode != null">#{scode},</if>
+            <if test="sortby != null">#{sortby},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNationality" parameterType="Nationality">
+        update nationality
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inTime != null">in_time = #{inTime},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="cname != null and cname != ''">cname = #{cname},</if>
+            <if test="ename != null and ename != ''">ename = #{ename},</if>
+            <if test="scode != null">scode = #{scode},</if>
+            <if test="sortby != null">sortby = #{sortby},</if>
+        </trim>
+        where nation_id = #{nationId}
+    </update>
+
+    <delete id="deleteNationalityById" parameterType="String">
+        delete from nationality where nation_id = #{nationId}
+    </delete>
+
+    <delete id="deleteNationalityByIds" parameterType="String">
+        delete from nationality where nation_id in 
+        <foreach item="nationId" collection="array" open="(" separator="," close=")">
+            #{nationId}
+        </foreach>
+    </delete>
+
+</mapper>

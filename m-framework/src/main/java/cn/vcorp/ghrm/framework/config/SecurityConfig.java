@@ -120,6 +120,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/orgRelationship/**").permitAll()
                 .antMatchers("/jobManagement/**").permitAll()
                 .antMatchers("/orgStaffing/**").permitAll()
+                .antMatchers("/emp/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().disable();

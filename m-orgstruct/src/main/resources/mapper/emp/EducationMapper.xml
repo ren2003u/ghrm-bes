@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vcorp.ghrm.emp.mapper.EducationMapper">
+    
+    <resultMap type="Education" id="EducationResult">
+        <result property="eduId"    column="edu_id"    />
+        <result property="inTime"    column="in_time"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="sortby"    column="sortby"    />
+    </resultMap>
+
+    <sql id="selectEducationVo">
+        select edu_id, in_time, code, name, sortby from education
+    </sql>
+
+    <select id="selectEducationList" parameterType="Education" resultMap="EducationResult">
+        <include refid="selectEducationVo"/>
+        <where>  
+            <if test="inTime != null "> and in_time = #{inTime}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="sortby != null "> and sortby = #{sortby}</if>
+        </where>
+    </select>
+    
+    <select id="selectEducationById" parameterType="String" resultMap="EducationResult">
+        <include refid="selectEducationVo"/>
+        where edu_id = #{eduId}
+    </select>
+        
+    <insert id="insertEducation" parameterType="Education">
+        insert into education
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="eduId != null">edu_id,</if>
+            <if test="inTime != null">in_time,</if>
+            <if test="code != null">code,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="sortby != null">sortby,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="eduId != null">#{eduId},</if>
+            <if test="inTime != null">#{inTime},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sortby != null">#{sortby},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEducation" parameterType="Education">
+        update education
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inTime != null">in_time = #{inTime},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="sortby != null">sortby = #{sortby},</if>
+        </trim>
+        where edu_id = #{eduId}
+    </update>
+
+    <delete id="deleteEducationById" parameterType="String">
+        delete from education where edu_id = #{eduId}
+    </delete>
+
+    <delete id="deleteEducationByIds" parameterType="String">
+        delete from education where edu_id in 
+        <foreach item="eduId" collection="array" open="(" separator="," close=")">
+            #{eduId}
+        </foreach>
+    </delete>
+
+</mapper>
